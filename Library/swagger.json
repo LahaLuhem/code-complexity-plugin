@@ -1,0 +1,1191 @@
+{
+  "openapi" : "3.0.0",
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/AHALMEHULGITHUB/Setmore/1.0.0"
+  }, {
+    "description" : "Setmore Apiary",
+    "url" : "https://developer.setmore.com/api/v1"
+  } ],
+  "info" : {
+    "description" : "This is a simple API",
+    "version" : "1.0.0",
+    "title" : "Simple appointments API",
+    "contact" : {
+      "email" : "you@your-company.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "paths" : {
+    "/o/oauth2/token" : {
+      "get" : {
+        "summary" : "Swap refresh token for access token",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "refreshToken",
+          "schema" : {
+            "type" : "string",
+            "example" : "XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX"
+          },
+          "required" : true,
+          "description" : "The refresh token to be swapped for a new access token"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A new access token",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "token" : {
+                          "$ref" : "#/components/schemas/TokenDto"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/bookingapi/services" : {
+      "get" : {
+        "summary" : "Fetch all services",
+        "description" : "To get the list of all the available services provided by your company\n",
+        "responses" : {
+          "200" : {
+            "description" : "all services",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ServiceModelDto"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/bookingapi/services/categories" : {
+      "get" : {
+        "summary" : "Fetch Service Categories",
+        "responses" : {
+          "200" : {
+            "description" : "A list of service categories",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "msg" : {
+                      "type" : "string",
+                      "example" : "categories fetched successfully"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "service_categories" : {
+                          "type" : "array",
+                          "items" : {
+                            "$ref" : "#/components/schemas/ServiceCategoryDto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/bookingapi/services/categories/{categoryKey}" : {
+      "get" : {
+        "summary" : "Fetch Service by Category Key",
+        "description" : "To get a list of all Services present in a particular category\n",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "categoryKey",
+          "description" : "pass an optional search string for looking up inventory",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of service categories",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "msg" : {
+                      "type" : "string",
+                      "example" : "categories fetched successfully"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "service_categories" : {
+                          "type" : "array",
+                          "items" : {
+                            "$ref" : "#/components/schemas/ServiceCategoryDto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/bookingapi/staffs" : {
+      "get" : {
+        "summary" : "Fetch all staff",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "cursor",
+          "schema" : {
+            "type" : "string",
+            "example" : "xxxxxxxx"
+          },
+          "required" : false,
+          "description" : "Cursor for pagination to fetch the next batch of staff"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of staff",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "cursor" : {
+                          "type" : "string",
+                          "example" : "xxxxxxxx"
+                        },
+                        "staffs" : {
+                          "type" : "array",
+                          "items" : {
+                            "$ref" : "#/components/schemas/StaffDto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/bookingapi/slots" : {
+      "post" : {
+        "summary" : "Get all available time slots",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TimeSlotRequestDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "A list of available time slots",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimeSlotDto"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/bookingapi/customer/create" : {
+      "post" : {
+        "summary" : "Create a customer",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateCustomerRequestDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Customer created successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "msg" : {
+                      "type" : "string",
+                      "example" : "Customer created successfully"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "customer" : {
+                          "$ref" : "#/components/schemas/CustomerDto"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/bookingapi/customer" : {
+      "get" : {
+        "summary" : "Get customer details",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "firstname",
+          "schema" : {
+            "type" : "string",
+            "example" : "name"
+          },
+          "required" : true,
+          "description" : "The first name of the customer"
+        }, {
+          "in" : "query",
+          "name" : "phone",
+          "schema" : {
+            "type" : "string",
+            "example" : "phone"
+          },
+          "required" : false,
+          "description" : "The phone number of the customer"
+        }, {
+          "in" : "query",
+          "name" : "email",
+          "schema" : {
+            "type" : "string",
+            "example" : "emailId"
+          },
+          "required" : false,
+          "description" : "The email ID of the customer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Customer fetched successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "msg" : {
+                      "type" : "string",
+                      "example" : "Customer fetched successfully"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "customer" : {
+                          "type" : "array",
+                          "items" : {
+                            "$ref" : "#/components/schemas/CustomerDetailsDto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/bookingapi/appointment/create" : {
+      "post" : {
+        "summary" : "Create an appointment",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateAppointmentRequestDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Appointment created successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "msg" : {
+                      "type" : "string",
+                      "example" : "Appointment created successfully"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "appointment" : {
+                          "$ref" : "#/components/schemas/AppointmentDto"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/bookingapi/appointments/{appointmentKey}/label" : {
+      "put" : {
+        "summary" : "Update an appointment label",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "appointmentKey",
+          "schema" : {
+            "type" : "string",
+            "example" : "XXXXX-XXXXXXXX-XXXXXX"
+          },
+          "required" : true,
+          "description" : "The key of the appointment to update"
+        }, {
+          "in" : "query",
+          "name" : "label",
+          "schema" : {
+            "type" : "string",
+            "example" : "Test Label"
+          },
+          "required" : true,
+          "description" : "The new label for the appointment"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Appointment label updated successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "msg" : {
+                      "type" : "string",
+                      "example" : "Appointment Label updated successfully"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "appointment" : {
+                          "$ref" : "#/components/schemas/AppointmentDto"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/bookingapi/appointments" : {
+      "get" : {
+        "summary" : "Fetch appointments by date range",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "startDate",
+          "schema" : {
+            "type" : "string",
+            "format" : "date",
+            "example" : "12-02-2020"
+          },
+          "required" : true,
+          "description" : "The start date for fetching appointment (format: dd-mm-yyyy)"
+        }, {
+          "in" : "query",
+          "name" : "endDate",
+          "schema" : {
+            "type" : "string",
+            "format" : "date",
+            "example" : "12-03-2020"
+          },
+          "required" : true,
+          "description" : "The end date for fetching appointments (format: dd-mm-yyyy)"
+        }, {
+          "in" : "query",
+          "name" : "customerDetails",
+          "schema" : {
+            "type" : "boolean",
+            "example" : true
+          },
+          "required" : false,
+          "description" : "Whether to include customer details in the response"
+        }, {
+          "in" : "query",
+          "name" : "staff_key",
+          "schema" : {
+            "type" : "string",
+            "example" : "xxxxxxxxxxx"
+          },
+          "required" : false,
+          "description" : "The key of the staff to fetch appointments for"
+        }, {
+          "in" : "query",
+          "name" : "cursor",
+          "schema" : {
+            "type" : "string",
+            "example" : "xxxxxxxx"
+          },
+          "required" : false,
+          "description" : "The cursor for pagination to fetch the next batch of appointments"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of appointments",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "cursor" : {
+                          "type" : "string",
+                          "example" : "xxxxxxxx"
+                        },
+                        "appointments" : {
+                          "type" : "array",
+                          "items" : {
+                            "$ref" : "#/components/schemas/AppointmentDto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/bookingapi/untested-attributes-for-fetching-appointments" : {
+      "get" : {
+        "summary" : "Fetch appointments by date range",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "startDate",
+          "schema" : {
+            "type" : "string",
+            "format" : "date",
+            "example" : "12-02-2020"
+          },
+          "required" : true,
+          "description" : "The start date for fetching appointments (format: dd-mm-yyyy)"
+        }, {
+          "in" : "query",
+          "name" : "endDate",
+          "schema" : {
+            "type" : "string",
+            "format" : "date",
+            "example" : "12-03-2020"
+          },
+          "required" : true,
+          "description" : "The end date for fetching appointments (format: dd-mm-yyyy)"
+        }, {
+          "in" : "query",
+          "name" : "staff_key",
+          "schema" : {
+            "type" : "string",
+            "example" : "xxxxxxxxxxx"
+          },
+          "required" : false,
+          "description" : "The key of the staff to fetch appointments for"
+        }, {
+          "in" : "query",
+          "name" : "customerDetails",
+          "schema" : {
+            "type" : "boolean",
+            "example" : true
+          },
+          "required" : false,
+          "description" : "Whether to include customer details in the response"
+        }, {
+          "in" : "query",
+          "name" : "cursor",
+          "schema" : {
+            "type" : "string",
+            "example" : "xxxxxxxx"
+          },
+          "required" : false,
+          "description" : "The cursor for pagination to fetch the next batch of appointments"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of appointments",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "cursor" : {
+                          "type" : "string",
+                          "example" : "eyJzdGFydFRpbWUiOj..."
+                        },
+                        "appointments" : {
+                          "type" : "array",
+                          "items" : {
+                            "$ref" : "#/components/schemas/AppointmentWithCustomerDto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "BearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    },
+    "schemas" : {
+      "TokenDto" : {
+        "type" : "object",
+        "properties" : {
+          "access_token" : {
+            "type" : "string",
+            "example" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+          },
+          "token_type" : {
+            "type" : "string",
+            "example" : "BEARER"
+          },
+          "expires_in" : {
+            "type" : "integer",
+            "example" : 604799
+          },
+          "user_id" : {
+            "type" : "string",
+            "example" : "XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX"
+          }
+        }
+      },
+      "ServiceModelDto" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string",
+            "example" : "XXXXXXXXXXX"
+          },
+          "service_name" : {
+            "type" : "string",
+            "example" : "Photo shoot"
+          },
+          "staff_keys" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "example" : "XXXXXXXXXXXXX"
+            }
+          },
+          "duration" : {
+            "type" : "integer",
+            "example" : 20
+          },
+          "buffer_duration" : {
+            "type" : "integer",
+            "example" : 20
+          },
+          "cost" : {
+            "type" : "number",
+            "format" : "float",
+            "example" : 10
+          },
+          "currency" : {
+            "type" : "string",
+            "example" : "USD"
+          }
+        }
+      },
+      "ServiceCategoryDto" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string",
+            "example" : "xxxxx"
+          },
+          "categoryName" : {
+            "type" : "string",
+            "example" : "xxxxx"
+          },
+          "serviceIdList" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "example" : "xxxxx"
+            }
+          }
+        }
+      },
+      "StaffDto" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string",
+            "example" : "abc"
+          },
+          "first_name" : {
+            "type" : "string",
+            "example" : "Setmore"
+          },
+          "last_name" : {
+            "type" : "string",
+            "example" : "Staff"
+          },
+          "email_id" : {
+            "type" : "string",
+            "example" : "staff@setmore.com"
+          },
+          "country_code" : {
+            "type" : "string",
+            "example" : "+1"
+          },
+          "work_phone" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "image_url" : {
+            "type" : "string",
+            "example" : ""
+          },
+          "comment" : {
+            "type" : "string",
+            "example" : "description of staff"
+          }
+        }
+      },
+      "TimeSlotDto" : {
+        "type" : "object",
+        "properties" : {
+          "response" : {
+            "type" : "boolean",
+            "example" : true
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "example" : "05.00"
+            }
+          }
+        }
+      },
+      "TimeSlotRequestDto" : {
+        "type" : "object",
+        "properties" : {
+          "staff_key" : {
+            "type" : "string",
+            "example" : "XXXXXXXX"
+          },
+          "service_key" : {
+            "type" : "string",
+            "example" : "XXXXXXX"
+          },
+          "selected_date" : {
+            "type" : "string",
+            "example" : "DD/MM/YYYY"
+          },
+          "off_hours" : {
+            "type" : "boolean",
+            "example" : true
+          },
+          "double_booking" : {
+            "type" : "boolean",
+            "example" : true
+          },
+          "slot_limit" : {
+            "type" : "integer",
+            "example" : 30
+          },
+          "timezone" : {
+            "type" : "string",
+            "example" : "America/Los_Angeles"
+          }
+        }
+      },
+      "CustomerDto" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string",
+            "example" : "XXXXXXXXX"
+          },
+          "first_name" : {
+            "type" : "string",
+            "example" : "Kevin"
+          },
+          "last_name" : {
+            "type" : "string",
+            "example" : "Payne"
+          },
+          "email_id" : {
+            "type" : "string",
+            "example" : "kevin@setmore.com"
+          },
+          "country_code" : {
+            "type" : "string",
+            "example" : "+1"
+          },
+          "cell_phone" : {
+            "type" : "string",
+            "example" : "(000) 000-0000"
+          },
+          "work_phone" : {
+            "type" : "string",
+            "example" : "(000) 000-0000"
+          },
+          "home_phone" : {
+            "type" : "string",
+            "example" : "(000) 000-0000"
+          },
+          "address" : {
+            "type" : "string",
+            "example" : "SMALLSYS INC 795 E DRAGRAM"
+          },
+          "city" : {
+            "type" : "string",
+            "example" : "TUCSON"
+          },
+          "state" : {
+            "type" : "string",
+            "example" : "AZ"
+          },
+          "postal_code" : {
+            "type" : "string",
+            "example" : "85705"
+          },
+          "image_url" : {
+            "type" : "string",
+            "example" : "https://myimages.com/kevin.jpg"
+          },
+          "comment" : {
+            "type" : "string",
+            "example" : "Referred by aravinth"
+          },
+          "additional_fields" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "example" : {
+              "Skype_id" : "Tom40"
+            }
+          }
+        }
+      },
+      "CreateCustomerRequestDto" : {
+        "type" : "object",
+        "properties" : {
+          "first_name" : {
+            "type" : "string",
+            "example" : "Kevin"
+          },
+          "last_name" : {
+            "type" : "string",
+            "example" : "Payne"
+          },
+          "email_id" : {
+            "type" : "string",
+            "example" : "kevin@setmore.com"
+          },
+          "country_code" : {
+            "type" : "string",
+            "example" : "+1"
+          },
+          "cell_phone" : {
+            "type" : "string",
+            "example" : "(000) 000-0000"
+          },
+          "work_phone" : {
+            "type" : "string",
+            "example" : "(000) 000-0000"
+          },
+          "home_phone" : {
+            "type" : "string",
+            "example" : "(000) 000-0000"
+          },
+          "address" : {
+            "type" : "string",
+            "example" : "SMALLSYS INC 795 E DRAGRAM"
+          },
+          "city" : {
+            "type" : "string",
+            "example" : "TUCSON"
+          },
+          "state" : {
+            "type" : "string",
+            "example" : "AZ"
+          },
+          "postal_code" : {
+            "type" : "string",
+            "example" : "85705"
+          },
+          "image_url" : {
+            "type" : "string",
+            "example" : "https://myimages.com/kevin.jpg"
+          },
+          "comment" : {
+            "type" : "string",
+            "example" : "Referred by aravinth"
+          },
+          "additional_fields" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "example" : {
+              "Skype_id" : "Tom40"
+            }
+          }
+        }
+      },
+      "CustomerDetailsDto" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string",
+            "example" : "XXXXX-XXXXXXXX-XXXXXX"
+          },
+          "first_name" : {
+            "type" : "string",
+            "example" : "XXXXXX"
+          },
+          "email_id" : {
+            "type" : "string",
+            "example" : "xxxxxx@gmail.com"
+          },
+          "cell_phone" : {
+            "type" : "string",
+            "example" : "XXXXXXXX"
+          },
+          "address" : {
+            "type" : "string",
+            "example" : "XXXX"
+          },
+          "additional_fields" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "example" : {
+              "serial_no" : ""
+            }
+          }
+        }
+      },
+      "CreateAppointmentRequestDto" : {
+        "type" : "object",
+        "properties" : {
+          "staff_key" : {
+            "type" : "string",
+            "example" : "XXXXXXXX"
+          },
+          "service_key" : {
+            "type" : "string",
+            "example" : "XXXXXXXX"
+          },
+          "customer_key" : {
+            "type" : "string",
+            "example" : "XXXXXXXX"
+          },
+          "start_time" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2021-02-19T19:00Z"
+          },
+          "end_time" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2021-02-19T20:00Z"
+          },
+          "comment" : {
+            "type" : "string",
+            "example" : "Test comment"
+          },
+          "label" : {
+            "type" : "string",
+            "example" : "Test Label"
+          }
+        }
+      },
+      "AppointmentDto" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string",
+            "example" : "XXXXX-XXXXXXXX-XXXXXX"
+          },
+          "start_time" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2021-02-19T19:00Z"
+          },
+          "end_time" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2021-02-19T20:00Z"
+          },
+          "duration" : {
+            "type" : "integer",
+            "example" : 60
+          },
+          "staff_key" : {
+            "type" : "string",
+            "example" : "XXXXXXXX"
+          },
+          "service_key" : {
+            "type" : "string",
+            "example" : "XXXXXXXX"
+          },
+          "customer_key" : {
+            "type" : "string",
+            "example" : "XXXXXXXX"
+          },
+          "cost" : {
+            "type" : "number",
+            "format" : "float",
+            "example" : 1000
+          },
+          "currency" : {
+            "type" : "string",
+            "example" : "USD"
+          },
+          "comment" : {
+            "type" : "string",
+            "example" : "Test comment"
+          },
+          "label" : {
+            "type" : "string",
+            "example" : "Test Label"
+          }
+        }
+      },
+      "AppointmentWithCustomerDto" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string",
+            "example" : "XXXXXXXXXX"
+          },
+          "start_time" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-02-19T10:00Z"
+          },
+          "end_time" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-02-19T11:00Z"
+          },
+          "duration" : {
+            "type" : "integer",
+            "example" : 60
+          },
+          "staff_key" : {
+            "type" : "string",
+            "example" : "XXXXXXXXX"
+          },
+          "service_key" : {
+            "type" : "string",
+            "example" : "XXXXXXXXX"
+          },
+          "customer_key" : {
+            "type" : "string",
+            "example" : "XXXXXXX"
+          },
+          "customer" : {
+            "type" : "object",
+            "properties" : {
+              "key" : {
+                "type" : "string",
+                "example" : "XXXXXXX"
+              },
+              "first_name" : {
+                "type" : "string",
+                "example" : "John"
+              },
+              "last_name" : {
+                "type" : "string",
+                "example" : "Doe"
+              },
+              "email_id" : {
+                "type" : "string",
+                "example" : "john.doe@setmore.com"
+              },
+              "country_code" : {
+                "type" : "string",
+                "example" : "+1"
+              },
+              "cell_phone" : {
+                "type" : "string",
+                "example" : ""
+              },
+              "image_url" : {
+                "type" : "string",
+                "example" : "/bookingpage/images/provider_img2.png"
+              },
+              "additional_fields" : {
+                "type" : "object",
+                "additionalProperties" : {
+                  "type" : "string"
+                },
+                "example" : {
+                  "Skype" : "",
+                  "Hangout" : ""
+                }
+              }
+            }
+          },
+          "currency" : {
+            "type" : "string",
+            "example" : "USD"
+          },
+          "label" : {
+            "type" : "string",
+            "example" : "No Label"
+          },
+          "cost" : {
+            "type" : "number",
+            "format" : "float",
+            "example" : 100
+          }
+        }
+      }
+    }
+  }
+}
