@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+## [1.8.0]
+- Added support for Go language.
+
 ## [1.7.0]
 - Added support for Dart language.
 

@@ -74,13 +74,16 @@ jobs:
       - name: Run Tests
         run: ./gradlew check
 
-      # Collect Tests Result of failed tests
-      - name: Collect Tests Result
-        if: ${{ failure() }}
+      # Collect test reports and raw JUnit XML results
+      - name: Collect Test Results
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: tests-result
-          path: ${{ github.workspace }}/build/reports/tests
+          name: test-results
+          if-no-files-found: warn
+          path: |
+            ${{ github.workspace }}/build/reports/tests
+            ${{ github.workspace }}/build/test-results
 
       # Upload Kover report to CodeCov
       - name: Upload Code Coverage Report
