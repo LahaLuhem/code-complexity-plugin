@@ -22,7 +22,8 @@ class GoComplexityInfoProvider(override val language: Language = GoLanguage.INST
     override fun getVisitor(sink: ComplexitySink): ElementVisitor = GoLanguageVisitor(sink)
 
     override fun isComplexitySuitableMember(element: PsiElement): Boolean {
-        return element is GoFunctionOrMethodDeclaration || element is GoFunctionLit
+        return element is GoFunctionOrMethodDeclaration ||
+            (element is GoFunctionLit && (element.isMemberFunction() || element.isToplevelVarDeclFunction()))
     }
 
     override fun isClassWithBody(element: PsiElement): Boolean {

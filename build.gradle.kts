@@ -41,8 +41,8 @@ dependencies {
         bundledPlugin("org.jetbrains.kotlin")
         plugin("PythonCore", "253.28294.334")
         plugin("Dart", "253.28294.51")
-        plugin("org.jetbrains.plugins.go", "252.23892.360")
-        testPlugin("org.jetbrains.plugins.go", "252.23892.360")
+        plugin("org.jetbrains.plugins.go", "253.33514.17")
+        testPlugin("org.jetbrains.plugins.go", "253.33514.17")
 
         pluginVerifier()
         zipSigner()

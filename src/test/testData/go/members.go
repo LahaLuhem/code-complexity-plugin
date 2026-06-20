@@ -17,7 +17,7 @@ var proc = struct {
 	},
 }
 
-//go:generate complexity 1
+//go:generate complexity 4
 var myFunc = func(variables []int) int {
 	m := 0
 	for i, v := range variables { //+1

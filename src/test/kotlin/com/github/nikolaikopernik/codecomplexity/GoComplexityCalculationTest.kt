@@ -162,13 +162,7 @@ class GoComplexityCalculationTest : BaseComplexityTest() {
     @Suppress("JUnitMixedFramework")
     @Test
     fun testGoComplexity() {
-        try {
-            checkAllFilesInFolder(GO_TEST_FILES_PATH, ".go")
-        } catch (e: NoClassDefFoundError) {
-            if (e.message != "com/intellij/ultimate/UltimateVerifier") {
-                throw e
-            }
-        }
+        checkAllFilesInFolder(GO_TEST_FILES_PATH, ".go")
     }
 
     override fun getTestDataPath() = GO_TEST_FILES_PATH
@@ -371,7 +365,7 @@ class GoComplexityCalculationTest : BaseComplexityTest() {
         val GoFunctionLit.varFunctionComplexity: Int?
             get() {
                 val varSpec = this.parent as? GoVarSpec ?: return null
-                val comment = findComment(varSpec) ?: return null
+                val comment = findComment(varSpec) ?: findComment(varSpec.parent) ?: return null
                 return comment.text?.complexity()
             }
 
