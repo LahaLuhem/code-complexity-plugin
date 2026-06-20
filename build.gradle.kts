@@ -4,7 +4,7 @@ import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 plugins {
     id("java") // Java support
-    id("org.jetbrains.intellij.platform") version "2.7.0" // Gradle IntelliJ Plugin
+    id("org.jetbrains.intellij.platform") version "2.11.0" // Gradle IntelliJ Plugin
     alias(libs.plugins.kotlin) version "2.2.0" // Kotlin support
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
 }
@@ -26,6 +26,7 @@ repositories {
     // IntelliJ Platform Gradle Plugin Repositories Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-repositories-extension.html
     intellijPlatform {
         defaultRepositories()
+        snapshots()
     }
 }
 
@@ -34,13 +35,13 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 
     intellijPlatform {
-        intellijIdeaCommunity("2025.1.4.1")
+        intellijIdea("2025.3")
 
         bundledPlugin("com.intellij.java")
         bundledPlugin("org.jetbrains.kotlin")
-        plugin("PythonCore", "252.23892.409")
+        plugin("PythonCore", "253.28294.334")
+        plugin("Dart", "253.28294.51")
 
-        instrumentationTools()
         pluginVerifier()
         zipSigner()
         testFramework(TestFrameworkType.Platform)
