@@ -424,7 +424,7 @@ private class MockPackageFactory : GoPackageFactory {
 @Suppress("UnstableApiUsage")
 private class MockStubIndex : StubIndex() {
 
-    override fun <Key : Any?, Psi : PsiElement?> processElements(
+    override fun <Key, Psi : PsiElement?> processElements(
         indexKey: StubIndexKey<Key?, Psi?>,
         key: Key & Any,
         project: Project,
@@ -433,16 +433,16 @@ private class MockStubIndex : StubIndex() {
         requiredClass: Class<Psi?>,
         processor: Processor<in Psi>): Boolean = true
 
-    override fun <Key : Any?> getAllKeys(p0: StubIndexKey<Key?, *>, p1: Project): Collection<Key?> =
+    override fun <Key> getAllKeys(p0: StubIndexKey<Key?, *>, p1: Project): Collection<Key?> =
         TODO("Not yet implemented")
 
-    override fun <Key : Any?> getContainingFilesIterator(p0: StubIndexKey<Key?, *>,
-                                                         p1: Key & Any,
-                                                         p2: Project,
-                                                         p3: GlobalSearchScope): Iterator<VirtualFile?> =
+    override fun <Key> getContainingFilesIterator(p0: StubIndexKey<Key?, *>,
+                                                  p1: Key & Any,
+                                                  p2: Project,
+                                                  p3: GlobalSearchScope): Iterator<VirtualFile?> =
         TODO("Not yet implemented")
 
-    override fun <Key : Any?> getMaxContainingFileCount(
+    override fun <Key> getMaxContainingFileCount(
         p0: StubIndexKey<Key?, *>,
         p1: Key & Any,
         p2: Project,
