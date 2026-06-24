@@ -6,7 +6,6 @@ import com.github.nikolaikopernik.codecomplexity.settings.ComplexityLevel.HARD
 import com.github.nikolaikopernik.codecomplexity.settings.ComplexityLevel.MIDDLE
 import com.github.nikolaikopernik.codecomplexity.settings.ComplexityLevel.SIMPLE
 import com.intellij.openapi.util.IconLoader
-import java.awt.Color
 import javax.swing.Icon
 
 private val settings = SettingsState.INSTANCE
@@ -68,7 +67,4 @@ private fun customHintTextWithScore(template: String, score: String): String {
     }
 }
 
-private fun String.parseColor() = Color(this.drop(1).toInt(16), false)
 
-
-fun Color.toHex(): String = String.format("#%02x%02x%02x", this.red, this.green, this.blue)
