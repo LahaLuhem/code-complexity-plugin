@@ -5,20 +5,16 @@ import com.github.nikolaikopernik.codecomplexity.core.PointType
 import com.github.nikolaikopernik.codecomplexity.settings.ComplexityLevel.HARD
 import com.github.nikolaikopernik.codecomplexity.settings.ComplexityLevel.MIDDLE
 import com.github.nikolaikopernik.codecomplexity.settings.ComplexityLevel.SIMPLE
-import com.intellij.openapi.application.CachedSingletonsRegistry
 import com.intellij.openapi.util.IconLoader
 import java.awt.Color
-import java.util.function.Supplier
 import javax.swing.Icon
 
-private val stateSupplier: Supplier<SettingsState> = CachedSingletonsRegistry.lazy { SettingsState.INSTANCE }
-
-private var settings = SettingsState.INSTANCE
+private val settings = SettingsState.INSTANCE
 
 fun ComplexitySink.getConfiguredText(): String {
     val value = this.getComplexity()
     val showValue = this.getValueToShow()
-    return stateSupplier.get().determineLevel(value,
+    return settings.determineLevel(value,
                                               this.getPoints().any { it.type == PointType.METHOD },
                                               { customHintTextWithScore(settings.hintTextSimpleComplex, showValue) },
                                               { customHintTextWithScore(settings.hintTextMildlyComplex, showValue) },
@@ -26,16 +22,16 @@ fun ComplexitySink.getConfiguredText(): String {
 }
 
 fun ComplexitySink.getValueToShow(): String =
-    if (stateSupplier.get().usePlainComplexity) {
+    if (settings.usePlainComplexity) {
         this.getComplexity().toString()
     } else {
         val threshold = if (this.getPoints().any { it.type == PointType.METHOD })
-            stateSupplier.get().limitSimpleLessThan * 4 else stateSupplier.get().limitSimpleLessThan
+            settings.limitSimpleLessThan * 4 else settings.limitSimpleLessThan
         "${this.getComplexity() * 100 / threshold}%"
     }
 
 fun ComplexitySink.getConfiguredIcon(): Icon {
-    return stateSupplier.get().determineLevel(this.getComplexity(),
+    return settings.determineLevel(this.getComplexity(),
                                               this.getPoints().any { it.type == PointType.METHOD },
                                               { IconLoader.getIcon("simple.svg", this::class.java.classLoader) },
                                               { IconLoader.getIcon("medium.svg", this::class.java.classLoader) },
@@ -43,7 +39,7 @@ fun ComplexitySink.getConfiguredIcon(): Icon {
 }
 
 fun ComplexitySink.getConfiguredLevel() =
-    stateSupplier.get().determineLevel(this.getComplexity(), false, { SIMPLE }, { MIDDLE }, { HARD })
+    settings.determineLevel(this.getComplexity(), false, { SIMPLE }, { MIDDLE }, { HARD })
 
 /**
  * This method can determine complexity level based on

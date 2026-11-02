@@ -27,6 +27,7 @@ repositories {
     intellijPlatform {
         defaultRepositories()
         snapshots()
+        jetbrainsRuntime()
     }
 }
 
@@ -35,14 +36,14 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 
     intellijPlatform {
-        intellijIdea("2026.2")
+        intellijIdea("263.7307.44-EAP") { useInstaller = false }
 
         bundledPlugin("com.intellij.java")
         bundledPlugin("org.jetbrains.kotlin")
-        plugin("PythonCore", "262.8665.258")
-        plugin("Dart", "507.0.0")
-        plugin("org.jetbrains.plugins.go", "262.8665.258")
-        testPlugin("org.jetbrains.plugins.go", "262.8665.258")
+        plugin("PythonCore", "263.7307.44")
+        plugin("Dart", "510.0.0")
+        plugin("org.jetbrains.plugins.go", "263.7307.44")
+        testPlugin("org.jetbrains.plugins.go", "263.7307.44")
 
         pluginVerifier()
         zipSigner()
