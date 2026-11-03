@@ -68,12 +68,12 @@ class ComplexityFactoryInlayHintsCollector(private val complexityInfoProvider: C
 
     private fun getPresentation(element: PsiElement, complexityScore: ComplexitySink): InlayPresentation {
         val text = factory.inset(getTextPresentation(complexityScore, editor))
-        if (setting.showIcon) {
-            return factory.seq(
-                factory.icon(complexityScore.getConfiguredIcon()),
+        val content = if (setting.showIcon) {
+            factory.seq(
+                factory.smallScaledIcon(complexityScore.getConfiguredIcon()),
                 text)
-        }
-        return text
+        } else text
+        return factory.inset(content, top = ((editor.lineHeight - content.height) / 2).coerceAtLeast(0))
     }
 
     /**
